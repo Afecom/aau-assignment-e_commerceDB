@@ -1,0 +1,25 @@
+{
+  "name": "assignment-express-postgres-sequelize-express_e-commerce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
+    "start": "node app.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migration": "npx sequelize-cli migration:generate --name"
+  },
+  "keywords": [],
+  "author": "Nuru Kamil",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "sequelize": "^6.37.7",
+    "sequelize-cli": "^6.6.3"
+  }
+}
