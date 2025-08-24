@@ -85,3 +85,8 @@ export async function deleteProduct(req, res){
         })
     }
 }
+
+export async function createProductImage(req, res){}
+export async function getProductImage(req, res){}
+export async function updateProductImage(req, res){}
+export async function deleteProductImage(req, res){}

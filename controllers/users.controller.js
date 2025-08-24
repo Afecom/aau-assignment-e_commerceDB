@@ -1,5 +1,6 @@
 import models from '../db/models/index.model.js'
-const { User } = models
+const User = models['User']
+const Address = models['Addresses']
 
 export async function createUsers(req, res){
     
@@ -71,6 +72,89 @@ export async function deleteUser(req, res){
     } catch (error) {
         res.status(400).json({
             message: "Couldn't delete the user",
+            error: error.message || error
+        })
+    }
+}
+
+export async function createUserAddress(req, res){
+    const { user_id, name } = req.body
+    try {
+        const address = await Address.create({user_id, name})
+        res.json({
+            message: "Address created succesfully",
+            address: address
+        })
+    } catch (error) {
+        res.status(400).json({
+            message: "Couldn't create an address",
+            error: error.message || error
+        })
+    }
+}
+export async function getUserAddress(req, res){
+    const user_id = req.params.id
+    try {
+        const address = await Address.findAll({
+            where: { user_id },
+            include: {
+                model: User,
+                as: 'users'
+            }
+        })
+        if (address){
+            return res.status(200).json({
+                message: "An address is found for the user",
+                address: address
+            })
+        }
+        res.status(404).json({
+            message: "An address couln't be found for the user"
+        })
+    } catch (error) {
+        res.status(400).json({
+            message: "Couldn't fetch an address",
+            error: error.message || error
+        })
+    }
+}
+export async function updateUserAddress(req, res){
+    const id = req.params.id
+    const { name } = req.body
+    try {
+        const address = await Address.findByPk(id)
+        if (address){
+            address.name = name
+            await address.save()
+            return res.json({
+                message: "Address updated successfully",
+                address: address
+            })
+        }
+        res.status(404).json({
+            message: "Couldn't find an address with the ID provided"
+        })
+    } catch (error) {
+        res.status(400).json({
+            message: "Couldn't update an address",
+            error: error.message || error
+        })
+    }
+}
+export async function deleteUserAddress(req, res){
+    const id = req.params.id
+    try {
+        const address = await Address.findByPk(id)
+        if(address){
+            const deleted = await address.destroy()
+            return res.json({
+                message: "Address deleted successfully",
+                address: deleted
+            })
+        }
+    } catch (error) {
+        res.status(400).json({
+            message: "Couldn't update an address",
             error: error.message || error
         })
     }
