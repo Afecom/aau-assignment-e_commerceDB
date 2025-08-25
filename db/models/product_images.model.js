@@ -16,7 +16,7 @@ export default (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true
         },
-        image_URL: {
+        image: {
             type: DataTypes.TEXT,
             allowNull: false
         },
